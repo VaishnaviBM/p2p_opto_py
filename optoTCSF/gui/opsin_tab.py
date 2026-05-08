@@ -8,7 +8,9 @@ Functionality:
   - Save/load user-defined opsin parameters.
 """
 
+import copy
 import json
+import math
 import numpy as np
 from pathlib import Path
 
@@ -384,6 +386,10 @@ class OpsinSimulatorTab(QWidget):
         btn_update.clicked.connect(self._apply_manual_params)
         layout.addWidget(btn_update)
 
+        btn_reset = QPushButton("Reset to Default Parameters")
+        btn_reset.clicked.connect(self._reset_params)
+        layout.addWidget(btn_reset)
+
         return w
 
     # ------------------------------------------------------------------
@@ -435,9 +441,19 @@ class OpsinSimulatorTab(QWidget):
     def _apply_manual_params(self):
         if self._current_params is None:
             self._current_params = OpsinParams()
+        # Work on a copy so the original stored in _all_opsins stays clean for reset
+        edited = copy.copy(self._current_params)
         for key, spin in self._param_fields.items():
-            setattr(self._current_params, key, spin.value())
+            setattr(edited, key, spin.value())
+        self._current_params = edited
         self.status.showMessage("Using manually edited parameters.")
+
+    def _reset_params(self):
+        name = self._opsin_combo.currentText()
+        if name in self._all_opsins:
+            self._current_params = self._all_opsins[name]
+            self._populate_param_fields(self._current_params)
+            self.status.showMessage(f"Reset to default parameters for {name}.")
 
     def _run_simulation(self):
         if self._current_params is None:
@@ -489,27 +505,40 @@ class OpsinSimulatorTab(QWidget):
 
         self.status.showMessage("Running TF sweep…")
         self._canvas.fig.clear()
-        n_plots = min(n_tf, 4)
-        step = max(1, n_tf // n_plots)
-        axes = self._canvas.fig.subplots(n_plots, 1, sharex=False)
-        if n_plots == 1:
-            axes = [axes]
 
-        for pi, i in enumerate(range(0, n_tf, step)):
-            if pi >= n_plots:
-                break
-            tf = tfs[i]
+        n_cols = 2
+        n_rows = math.ceil(n_tf / n_cols)
+        axes_grid = self._canvas.fig.subplots(n_rows, n_cols, sharex=False)
+        # Normalise to a flat list regardless of shape
+        if n_rows == 1 and n_cols == 1:
+            axes_flat = [axes_grid]
+        elif n_rows == 1:
+            axes_flat = list(axes_grid)
+        else:
+            axes_flat = [ax for row in axes_grid for ax in row]
+
+        for pi, tf in enumerate(tfs):
+            ax = axes_flat[pi]
             t, stim, I = simulate_sinusoidal(self._current_params, irr, tf, lam, V)
-            ax = axes[pi]
-            ax.plot(t, stim / stim.max(), "r--", lw=0.8, label="Stimulus (norm)")
-            ax.plot(t, I / (np.abs(I).max() + 1e-12), "b", lw=1.2, label="Photocurrent (norm)")
+            # Centre both signals so they oscillate around 0, then scale to [-1, 1]
+            stim_c = stim - stim.mean()
+            I_c = I - I.mean()
+            stim_norm = stim_c / (np.abs(stim_c).max() + 1e-12)
+            I_norm = I_c / (np.abs(I_c).max() + 1e-12)
+            ax.plot(t, stim_norm, "r--", lw=0.8, label="Stimulus (norm)")
+            ax.plot(t, I_norm, "b", lw=1.2, label="Photocurrent (norm)")
             ax.set_title(f"TF = {tf:.1f} Hz", fontsize=9)
             ax.legend(fontsize=7, loc="upper right")
             ax.set_xlabel("Time (ms)")
             ax.grid(True, alpha=0.3)
 
+        # Hide any unused axes in the last row
+        for pi in range(n_tf, len(axes_flat)):
+            axes_flat[pi].set_visible(False)
+
         opsin_name = self._opsin_combo.currentText()
         self._canvas.fig.suptitle(f"{opsin_name} – TF Sweep", fontsize=10)
+        self._canvas.fig.tight_layout()
         self._canvas.redraw()
         self.status.showMessage("TF sweep complete.")
 
