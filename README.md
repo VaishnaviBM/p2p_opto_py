@@ -6,11 +6,62 @@ A pip-installable Python GUI toolkit for optogenetics–vision research.
 
 ## Installation
 
+### Prerequisites
+
+- **Python 3.9 or later** — check with `python --version`
+- **pip**
+- **git**
+
+### Steps
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/VaishnaviBM/p2p_opto_py.git
+cd p2p_opto_py
+```
+
+**2. Create a virtual environment (recommended)**
+```bash
+python -m venv .venv
+source .venv/bin/activate        # macOS / Linux
+.venv\Scripts\activate           # Windows
+```
+
+**3. Install the package and its dependencies**
 ```bash
 pip install .
-# Video simulation requires additional packages:
+```
+
+This automatically installs:
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `numpy` | ≥ 1.23 | Numerical arrays, vectorised ODE integration |
+| `scipy` | ≥ 1.10 | Curve fitting (`least_squares`), interpolation, Weibull fitting |
+| `matplotlib` | ≥ 3.7 | All plots and figures |
+| `PyQt5` | ≥ 5.15 | GUI framework |
+| `pandas` | ≥ 1.5 | CSV export |
+
+**4. (Optional) Video Simulation support**
+```bash
 pip install imageio-ffmpeg scikit-image
 ```
+
+| Package | Purpose |
+|---------|---------|
+| `imageio-ffmpeg` | Reading and writing MP4/AVI/MOV video files |
+| `scikit-image` | Frame resizing |
+
+**5. (Optional) GPU acceleration for Video Simulation**
+
+Install one of the following if you have a CUDA-capable GPU:
+```bash
+pip install cupy-cuda12x   # CUDA 12.x — fastest, recommended
+# or
+pip install torch           # PyTorch CUDA fallback
+```
+
+The app detects whichever backend is available at runtime and displays it in the Processing panel. Falls back to NumPy (CPU) if neither is installed.
 
 ## Launch GUI
 
@@ -19,6 +70,12 @@ optoTCSF
 # or
 python -m optoTCSF
 ```
+
+## Notes
+
+- No data files are needed to get started — builtin opsins (ChR2, ReaChR, ChrimsonR, CsChrimson, bReaChES, ChRmine) are bundled with the package.
+- User-saved opsins are stored locally in `~/.optoTCSF/user_opsins.json` and persist across sessions.
+- `.mat`, CSV, and JSON experiment files for the TCSF Estimator and Opto TCSF Prediction modules are loaded at runtime via the GUI.
 
 ---
 
