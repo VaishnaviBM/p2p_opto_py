@@ -79,6 +79,47 @@ python -m optoTCSF
 
 ---
 
+## Uninstallation
+
+### If you used a virtual environment (easiest)
+
+Simply delete the environment directory — this removes the package and all its dependencies in one step:
+
+```bash
+deactivate
+rm -rf .venv          # macOS / Linux
+rmdir /s /q .venv     # Windows
+```
+
+### If you installed into your system Python
+
+`pip uninstall` does not remove dependencies automatically. Use `pip-autoremove` to cleanly remove optoTCSF and any of its dependencies not needed by other packages:
+
+```bash
+pip install pip-autoremove
+pip-autoremove optoTCSF -y
+```
+
+If you installed the optional video or GPU packages, remove those too:
+
+```bash
+pip-autoremove imageio-ffmpeg scikit-image -y
+pip uninstall cupy-cuda12x torch -y    # whichever you installed
+```
+
+> `pip-autoremove` will leave shared packages (e.g. `numpy`, `scipy`) intact if other installed packages depend on them.
+
+### Remove saved user data
+
+To delete any opsins you saved to the local library:
+
+```bash
+rm -rf ~/.optoTCSF          # macOS / Linux
+rmdir /s /q %USERPROFILE%\.optoTCSF   # Windows
+```
+
+---
+
 ## Modules
 
 ### 1 · Opsin Simulator
