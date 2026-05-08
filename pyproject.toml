@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optoTCSF"
+version = "0.1.0"
+description = "Optogenetic Temporal Contrast Sensitivity Framework – GUI toolkit"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "Vision and Cognition Group, University of Washington" }
+]
+keywords = ["optogenetics", "psychophysics", "contrast sensitivity", "TCSF", "qCSF"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+
+dependencies = [
+    "numpy>=1.23",
+    "scipy>=1.10",
+    "matplotlib>=3.7",
+    "PyQt5>=5.15",
+    "pandas>=1.5",
+]
+
+[project.optional-dependencies]
+experiment = [
+    "psychopy>=2023.1",
+    "pyopengl>=3.1",
+]
+dev = [
+    "pytest>=7",
+    "pytest-qt>=4",
+]
+
+[project.scripts]
+optoTCSF = "optoTCSF.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["optoTCSF", "optoTCSF.*"]
+
+[tool.setuptools.package-data]
+optoTCSF = ["data/*.json"]

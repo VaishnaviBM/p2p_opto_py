@@ -1,0 +1,56 @@
+{
+  "ChR2": {
+    "Gd1": 0.09, "Gd2": 0.01, "Gr": 0.0005,
+    "g0_ph": 5.9, "phim": 4e16,
+    "k1": 3.0, "k2": 0.18, "Gf0": 0.015, "Gb0": 0.005,
+    "kf": 0.03, "kb": 0.003, "gamma": 0.05,
+    "p": 1.0, "q": 1.0, "E": 0.0,
+    "peak_lambda": 460,
+    "description": "Channelrhodopsin-2, blue-shifted, fast kinetics"
+  },
+  "ReaChR": {
+    "Gd1": 0.0077, "Gd2": 0.00125, "Gr": 3.33e-5,
+    "g0_ph": 14.28, "phim": 5e17,
+    "k1": 1.2, "k2": 0.01, "Gf0": 0.0005, "Gb0": 0.0005,
+    "kf": 0.012, "kb": 0.001, "gamma": 0.05,
+    "p": 1.0, "q": 1.0, "E": 7.0,
+    "peak_lambda": 590,
+    "description": "Red-activatable ChR, red-shifted"
+  },
+  "ChrimsonR": {
+    "Gd1": 0.067, "Gd2": 0.01, "Gr": 0.0005,
+    "g0_ph": 12.25, "phim": 2e18,
+    "k1": 6.0, "k2": 0.1, "Gf0": 0.02, "Gb0": 0.05,
+    "kf": 0.1, "kb": 0.001, "gamma": 0.05,
+    "p": 0.6, "q": 1.0, "E": 0.0,
+    "peak_lambda": 590,
+    "description": "Red-shifted ChR with high sensitivity"
+  },
+  "CsChrimson": {
+    "Gd1": 0.033, "Gd2": 0.017, "Gr": 5e-6,
+    "g0_ph": 18.48, "phim": 6e16,
+    "k1": 3.0, "k2": 0.04, "Gf0": 0.005, "Gb0": 0.01,
+    "kf": 0.01, "kb": 0.6, "gamma": 0.05,
+    "p": 1.0, "q": 1.0, "E": -10.0,
+    "peak_lambda": 590,
+    "description": "Soma-targeted ChrimsonR"
+  },
+  "bReaChES": {
+    "Gd1": 0.025, "Gd2": 0.01, "Gr": 3.3e-5,
+    "g0_ph": 36.5, "phim": 6e15,
+    "k1": 0.4, "k2": 0.01, "Gf0": 0.002, "Gb0": 0.002,
+    "kf": 0.01, "kb": 0.04, "gamma": 0.05,
+    "p": 1.0, "q": 1.0, "E": 10.0,
+    "peak_lambda": 590,
+    "description": "Bistable ReaChR-ES"
+  },
+  "ChRmine": {
+    "Gd1": 0.02, "Gd2": 0.013, "Gr": 5.9e-4,
+    "g0_ph": 110.0, "phim": 2.1e15,
+    "k1": 0.2, "k2": 0.01, "Gf0": 0.0027, "Gb0": 0.0005,
+    "kf": 0.001, "kb": 0.0, "gamma": 0.05,
+    "p": 0.8, "q": 1.0, "E": 5.64,
+    "peak_lambda": 590,
+    "description": "Soma-targeted channelrhodopsin with very high photocurrent"
+  }
+}

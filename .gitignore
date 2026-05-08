@@ -1,0 +1,50 @@
+# ── MATLAB source & data ──────────────────────────────────────────────────────
+*.m
+*.mlx
+*.mlapp
+*.fig
+model/
+simulations/
+utilities/
+qCSF_v1/
+CSFExpt.m
+runExperiment.m
+
+# ── Output / scratch ──────────────────────────────────────────────────────────
+output/
+tmp/
+*.log
+
+# ── Python build artefacts ────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+*.whl
+*.so
+
+# ── Virtual environments ───────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+.env
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── IDE / OS ──────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# ── User opsin data (machine-local) ───────────────────────────────────────────
+~/.optoTCSF/
